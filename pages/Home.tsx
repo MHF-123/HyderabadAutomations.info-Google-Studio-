@@ -31,7 +31,7 @@ const Home: React.FC = () => {
         <div className="absolute inset-0 bg-black/60 dark:bg-black/70"></div>
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
-            Automate Your Hyderabad Business.
+            Automate Your Business.
             <br />
             <span className="text-primary">Save 3+ Hours Daily.</span>
           </h1>
@@ -96,7 +96,7 @@ const Home: React.FC = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-3xl sm:text-4xl font-bold">Solutions Tailored for Your Industry</h2>
-            <p className="mt-4 max-w-2xl mx-auto text-slate-600 dark:text-slate-400">We understand the unique challenges faced by local Hyderabad businesses.</p>
+            <p className="mt-4 max-w-2xl mx-auto text-slate-600 dark:text-slate-400">We understand the unique challenges faced by modern businesses.</p>
           </div>
           <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {industries.map(industry => (

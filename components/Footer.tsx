@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useData } from '../hooks/useData';
 
@@ -11,9 +11,9 @@ const Footer: React.FC = () => {
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
             <Link to="/" className="text-2xl font-bold text-light-text dark:text-dark-text">
-              Hyderabad Automations
+              TaskFuse
             </Link>
-            <p className="text-slate-500 dark:text-slate-400 mt-2">Empowering local SMEs with AI & Automation.</p>
+            <p className="text-slate-500 dark:text-slate-400 mt-2">Empowering SMEs with AI & Automation.</p>
           </div>
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
             <div>
@@ -41,7 +41,7 @@ const Footer: React.FC = () => {
         </div>
         <hr className="my-6 border-slate-200 sm:mx-auto dark:border-slate-700 lg:my-8" />
         <div className="text-center text-sm text-slate-500 dark:text-slate-400">
-          © {new Date().getFullYear()} Hyderabad Automations. All Rights Reserved.
+          © {new Date().getFullYear()} TaskFuse. All Rights Reserved.
         </div>
       </div>
     </footer>

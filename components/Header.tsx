@@ -47,7 +47,7 @@ const Header: React.FC = () => {
             onClick={handleBrandClick}
             className="text-2xl font-bold text-light-text dark:text-dark-text"
           >
-            Hyderabad Automations
+            TaskFuse
           </Link>
 
           <nav className="hidden md:flex items-center space-x-8">

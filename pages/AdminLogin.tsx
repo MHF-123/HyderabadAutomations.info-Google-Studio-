@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
@@ -32,7 +31,7 @@ const AdminLogin: React.FC = () => {
       <div className="w-full max-w-md p-8 space-y-8 bg-white dark:bg-dark-bg rounded-xl shadow-lg border border-slate-200 dark:border-slate-700">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-light-text dark:text-dark-text">Admin Login</h1>
-          <p className="text-slate-500 dark:text-slate-400">Hyderabad Automations</p>
+          <p className="text-slate-500 dark:text-slate-400">TaskFuse</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>

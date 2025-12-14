@@ -26,7 +26,7 @@ export const DEFAULT_INDUSTRIES: Industry[] = [
     id: 'pharma',
     name: 'Pharmaceutical Distributors',
     slug: 'pharma-distributors',
-    heroHeadline: "Custom Automation for Hyderabad's Pharmaceutical Distributors",
+    heroHeadline: "Custom Automation for Pharmaceutical Distributors",
     demoVideoUrl: 'https://www.youtube.com/embed/przg3cE55-E',
     painPoints: ['Manual order taking from 100s of chemists via WhatsApp.', 'Errors in data entry leading to wrong dispatches.', 'Delayed payment reminders and follow-ups.', 'Lack of real-time stock visibility for sales reps.'],
     automatedWorkflows: ['Automated Order Intake via WhatsApp', 'Real-time Inventory Sync', 'Automated Payment Reminders', 'Daily Sales Report Generation'],
@@ -37,7 +37,7 @@ export const DEFAULT_INDUSTRIES: Industry[] = [
     id: 'manufacturing',
     name: 'Manufacturing',
     slug: 'manufacturing',
-    heroHeadline: "Custom Automation for Hyderabad's Manufacturing Units",
+    heroHeadline: "Custom Automation for Manufacturing Units",
     demoVideoUrl: 'https://www.youtube.com/embed/przg3cE55-E',
     painPoints: ['Inefficient lead tracking from multiple sources.', 'Manual follow-up with potential clients.', 'Complex quotation generation process.', 'Difficulty in tracking production stages.'],
     automatedWorkflows: ['Centralized Lead Management System', 'Automated Follow-up Sequences', 'Instant Quotation Generation', 'Production Status Alerts'],
@@ -65,11 +65,11 @@ export const DEFAULT_FAQS: FAQ[] = [
   {
     id: '4',
     question: 'What if I need changes in the future?',
-    answer: 'We are your local partners for the long run. We offer support packages for ongoing tweaks, changes, and building new automations as your business grows and your needs change.'
-  }
+    answer: 'We are your dedicated partners for the long run. We offer support packages for ongoing tweaks, changes, and building new automations as your business grows and your needs change.'
+  },
 ];
 
-export const DEFAULT_WEBHOOK_URL = 'https://pi.n8x.online/webhook/HyderabadAutomations';
+export const DEFAULT_WEBHOOK_URL = 'https://pi.n8x.online/webhook/TaskFuse';
 
 export const ADMIN_CREDENTIALS = {
   username: 'admin',
@@ -78,5 +78,5 @@ export const ADMIN_CREDENTIALS = {
 
 // General Site Settings
 export const DEFAULT_CONTACT_PHONE = '+91 12345 67890';
-export const DEFAULT_CONTACT_EMAIL = 'contact@hyderabadautomations.com';
+export const DEFAULT_CONTACT_EMAIL = 'contact@taskfuse.com';
 export const DEFAULT_HERO_IMAGE = 'https://picsum.photos/seed/hero/1920/1080';
