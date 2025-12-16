@@ -323,32 +323,44 @@ const ManageIndustries: React.FC<{ industries: Industry[], setIndustries: Functi
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, formType: 'new' | 'edit') => {
         const { name, value } = e.target;
-        const updater = formType === 'new' ? setNewIndustry : setEditingIndustry;
-        updater(prev => ({ ...prev!, [name]: value }));
+        if (formType === 'new') {
+            setNewIndustry(prev => ({ ...prev, [name]: value }));
+        } else {
+            setEditingIndustry(prev => prev ? { ...prev, [name]: value } : prev);
+        }
     };
 
     const handleArrayInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>, formType: 'new' | 'edit') => {
         const { name, value } = e.target;
-        const updater = formType === 'new' ? setNewIndustry : setEditingIndustry;
-        updater(prev => ({ ...prev!, [name]: value.split('\n') }));
+        if (formType === 'new') {
+            setNewIndustry(prev => ({ ...prev, [name]: value.split('\n') }));
+        } else {
+            setEditingIndustry(prev => prev ? { ...prev, [name]: value.split('\n') } : prev);
+        }
     };
 
     const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>, formType: 'new' | 'edit') => {
         const file = e.target.files?.[0];
-        const updater = formType === 'new' ? setNewIndustry : setEditingIndustry;
 
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                 updater(prev => ({ ...prev!, image: reader.result as string }));
+                if (formType === 'new') {
+                    setNewIndustry(prev => ({ ...prev, image: reader.result as string }));
+                } else {
+                    setEditingIndustry(prev => prev ? { ...prev, image: reader.result as string } : prev);
+                }
             };
             reader.readAsDataURL(file);
         }
     };
      const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>, formType: 'new' | 'edit') => {
         const { value } = e.target;
-        const updater = formType === 'new' ? setNewIndustry : setEditingIndustry;
-        updater(prev => ({ ...prev!, image: value }));
+        if (formType === 'new') {
+            setNewIndustry(prev => ({ ...prev, image: value }));
+        } else {
+            setEditingIndustry(prev => prev ? { ...prev, image: value } : prev);
+        }
     };
 
     const handleAddIndustry = (e: React.FormEvent) => {
