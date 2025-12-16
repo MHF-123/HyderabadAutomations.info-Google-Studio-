@@ -75,11 +75,13 @@ const Home: React.FC = () => {
             <p className="mt-4 max-w-2xl mx-auto text-slate-600 dark:text-slate-400">Our simple 3-step process ensures a seamless transition to automation.</p>
           </div>
           <div className="relative mt-20">
-             <div className="absolute left-1/2 -translate-x-1/2 top-6 h-full w-px bg-slate-300 dark:bg-slate-700 md:block hidden"></div>
+             {/* Horizontal connecting line for desktop, positioned behind the icons */}
+             <div className="absolute top-12 left-0 w-full h-px bg-slate-300 dark:bg-slate-700 hidden md:block"></div>
+             
              <div className="grid gap-12 md:grid-cols-3">
               {howItWorksSteps.map((step, index) => (
-                <div key={step.title} className="text-center flex flex-col items-center">
-                   <div className="flex items-center justify-center h-24 w-24 rounded-full bg-white dark:bg-slate-800 border-2 border-primary mb-6 z-10 shadow-lg">
+                <div key={step.title} className="text-center flex flex-col items-center relative z-10">
+                   <div className="flex items-center justify-center h-24 w-24 rounded-full bg-white dark:bg-slate-900 border-2 border-primary mb-6 shadow-lg">
                     {step.icon}
                    </div>
                   <h3 className="text-2xl font-semibold">{step.title}</h3>

@@ -3,11 +3,18 @@ import { useAuth } from '../hooks/useAuth';
 import { useData } from '../hooks/useData';
 import { useNavigate, Link } from 'react-router-dom';
 import { Industry, FAQ, PricingTier } from '../types';
-import { Briefcase, HelpCircle, Tags, Settings, LogOut, PlusCircle, Trash2, Pencil, Globe, Eye, UploadCloud, ChevronDown } from 'lucide-react';
+import { Briefcase, HelpCircle, Settings, LogOut, PlusCircle, Trash2, Pencil, Globe, Eye, UploadCloud, ChevronDown } from 'lucide-react';
 
 type AdminSection = 'industries' | 'faqs' | 'settings' | 'general';
 
-const FormFields: React.FC<{ industry: Omit<Industry, 'id'> | Industry, formType: 'new' | 'edit', onInputChange: any, onImageFileChange: any, onImageUrlChange: any }> = ({ industry, formType, onInputChange, onImageFileChange, onImageUrlChange }) => {
+const FormFields: React.FC<{ 
+    industry: Omit<Industry, 'id'> | Industry, 
+    formType: 'new' | 'edit', 
+    onInputChange: (e: React.ChangeEvent<HTMLInputElement>, formType: 'new' | 'edit') => void, 
+    onArrayInputChange: (e: React.ChangeEvent<HTMLTextAreaElement>, formType: 'new' | 'edit') => void,
+    onImageFileChange: (e: React.ChangeEvent<HTMLInputElement>, formType: 'new' | 'edit') => void, 
+    onImageUrlChange: (e: React.ChangeEvent<HTMLInputElement>, formType: 'new' | 'edit') => void 
+}> = ({ industry, formType, onInputChange, onArrayInputChange, onImageFileChange, onImageUrlChange }) => {
     const [isDragging, setIsDragging] = useState(false);
 
     const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
@@ -60,17 +67,31 @@ const FormFields: React.FC<{ industry: Omit<Industry, 'id'> | Industry, formType
         </div>
         <div>
             <label htmlFor={`${formType}PainPoints`} className="block text-sm font-medium">Pain Points (one per line)</label>
-            <textarea id={`${formType}PainPoints`} name="painPoints" rows={4} defaultValue={industry.painPoints.join('\n')} className="mt-1 w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"></textarea>
+            <textarea 
+                id={`${formType}PainPoints`} 
+                name="painPoints" 
+                rows={4} 
+                value={industry.painPoints.join('\n')} 
+                onChange={(e) => onArrayInputChange(e, formType)} 
+                className="mt-1 w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
+            ></textarea>
         </div>
          <div>
             <label htmlFor={`${formType}AutomatedWorkflows`} className="block text-sm font-medium">Automated Workflows (one per line)</label>
-            <textarea id={`${formType}AutomatedWorkflows`} name="automatedWorkflows" rows={4} defaultValue={industry.automatedWorkflows.join('\n')} className="mt-1 w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"></textarea>
+            <textarea 
+                id={`${formType}AutomatedWorkflows`} 
+                name="automatedWorkflows" 
+                rows={4} 
+                value={industry.automatedWorkflows.join('\n')} 
+                onChange={(e) => onArrayInputChange(e, formType)} 
+                className="mt-1 w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
+            ></textarea>
         </div>
         <div className="md:col-span-2 space-y-4 rounded-md border border-slate-200 dark:border-slate-700 p-4">
              <div className="grid grid-cols-1 gap-4">
                 <div>
                     <label htmlFor={`${formType}ImageUrl`} className="block text-sm font-medium">Industry Image URL</label>
-                    <input id={`${formType}ImageUrl`} name="image" type="url" defaultValue={(industry.image && !industry.image.startsWith('data:')) ? industry.image : ''} onChange={(e) => onImageUrlChange(e, formType)} placeholder="https://example.com/image.png" className="mt-1 w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary" />
+                    <input id={`${formType}ImageUrl`} name="image" type="url" value={(industry.image && !industry.image.startsWith('data:')) ? industry.image : ''} onChange={(e) => onImageUrlChange(e, formType)} placeholder="https://example.com/image.png" className="mt-1 w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary" />
                 </div>
                 <div className="relative flex items-center">
                     <div className="flex-grow border-t border-slate-300 dark:border-slate-600"></div>
@@ -300,10 +321,16 @@ const ManageIndustries: React.FC<{ industries: Industry[], setIndustries: Functi
     const [editingIndustry, setEditingIndustry] = useState<Industry | null>(null);
     const [isAddFormVisible, setIsAddFormVisible] = useState(false);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, formType: 'new' | 'edit') => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, formType: 'new' | 'edit') => {
         const { name, value } = e.target;
         const updater = formType === 'new' ? setNewIndustry : setEditingIndustry;
         updater(prev => ({ ...prev!, [name]: value }));
+    };
+
+    const handleArrayInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>, formType: 'new' | 'edit') => {
+        const { name, value } = e.target;
+        const updater = formType === 'new' ? setNewIndustry : setEditingIndustry;
+        updater(prev => ({ ...prev!, [name]: value.split('\n') }));
     };
 
     const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>, formType: 'new' | 'edit') => {
@@ -316,10 +343,6 @@ const ManageIndustries: React.FC<{ industries: Industry[], setIndustries: Functi
                  updater(prev => ({ ...prev!, image: reader.result as string }));
             };
             reader.readAsDataURL(file);
-             // Clear the URL input if a file is chosen
-            const urlInput = document.getElementById(`${formType}ImageUrl`) as HTMLInputElement;
-            if (urlInput) urlInput.value = '';
-
         }
     };
      const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>, formType: 'new' | 'edit') => {
@@ -330,19 +353,16 @@ const ManageIndustries: React.FC<{ industries: Industry[], setIndustries: Functi
 
     const handleAddIndustry = (e: React.FormEvent) => {
         e.preventDefault();
-        const painPointsArray = (document.getElementById('newPainPoints') as HTMLTextAreaElement).value.split('\n').filter(p => p.trim() !== '');
-        const workflowsArray = (document.getElementById('newAutomatedWorkflows') as HTMLTextAreaElement).value.split('\n').filter(w => w.trim() !== '');
-
         const finalNewIndustry: Industry = {
             id: Date.now().toString(),
             ...newIndustry,
-            painPoints: painPointsArray,
-            automatedWorkflows: workflowsArray,
+            // Clean up empty lines
+            painPoints: newIndustry.painPoints.filter(p => p.trim() !== ''),
+            automatedWorkflows: newIndustry.automatedWorkflows.filter(w => w.trim() !== ''),
         };
         setIndustries([...industries, finalNewIndustry]);
         setNewIndustry(initialNewIndustryState);
         setIsAddFormVisible(false);
-        (document.getElementById('newIndustryForm') as HTMLFormElement).reset();
     };
     
     const handleEditClick = (industry: Industry) => {
@@ -354,13 +374,11 @@ const ManageIndustries: React.FC<{ industries: Industry[], setIndustries: Functi
         e.preventDefault();
         if (!editingIndustry) return;
 
-        const painPointsArray = (document.getElementById(`editPainPoints`) as HTMLTextAreaElement).value.split('\n').filter(p => p.trim() !== '');
-        const workflowsArray = (document.getElementById(`editAutomatedWorkflows`) as HTMLTextAreaElement).value.split('\n').filter(w => w.trim() !== '');
-        
         const updatedIndustry = {
             ...editingIndustry,
-            painPoints: painPointsArray,
-            automatedWorkflows: workflowsArray
+            // Clean up empty lines
+            painPoints: editingIndustry.painPoints.filter(p => p.trim() !== ''),
+            automatedWorkflows: editingIndustry.automatedWorkflows.filter(w => w.trim() !== ''),
         };
 
         setIndustries(industries.map(ind => (ind.id === editingIndustry.id ? updatedIndustry : ind)));
@@ -396,7 +414,14 @@ const ManageIndustries: React.FC<{ industries: Industry[], setIndustries: Functi
                     <div className="overflow-hidden">
                         <div className="border-t border-slate-200 dark:border-slate-700 p-6">
                             <form id="newIndustryForm" onSubmit={handleAddIndustry}>
-                                <FormFields industry={newIndustry} formType="new" onInputChange={handleInputChange} onImageFileChange={handleImageFileChange} onImageUrlChange={handleImageUrlChange} />
+                                <FormFields 
+                                    industry={newIndustry} 
+                                    formType="new" 
+                                    onInputChange={handleInputChange} 
+                                    onArrayInputChange={handleArrayInputChange}
+                                    onImageFileChange={handleImageFileChange} 
+                                    onImageUrlChange={handleImageUrlChange} 
+                                />
                                 <div className="text-right mt-6">
                                     <button type="submit" className="px-5 py-2 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-teal-500 transition-colors">Add Industry</button>
                                 </div>
@@ -412,10 +437,17 @@ const ManageIndustries: React.FC<{ industries: Industry[], setIndustries: Functi
                         {editingId === ind.id && editingIndustry ? (
                             <form onSubmit={handleUpdateIndustry}>
                                 <h3 className="text-xl font-semibold mb-4">Editing: {editingIndustry.name}</h3>
-                                <FormFields industry={editingIndustry} formType="edit" onInputChange={handleInputChange} onImageFileChange={handleImageFileChange} onImageUrlChange={handleImageUrlChange} />
+                                <FormFields 
+                                    industry={editingIndustry} 
+                                    formType="edit" 
+                                    onInputChange={handleInputChange} 
+                                    onArrayInputChange={handleArrayInputChange}
+                                    onImageFileChange={handleImageFileChange} 
+                                    onImageUrlChange={handleImageUrlChange} 
+                                />
                                 <div className="border-t border-slate-200 dark:border-slate-700 mt-6 pt-6">
                                     <ManageIndustryPricing 
-                                        tiers={editingIndustry.pricingTiers}
+                                        tiers={editingIndustry.pricingTiers || []}
                                         onTiersChange={(newTiers) => {
                                             setEditingIndustry(prev => ({ ...prev!, pricingTiers: newTiers }));
                                         }}
@@ -550,9 +582,6 @@ const ManageIndustryPricing: React.FC<{ tiers: PricingTier[], onTiersChange: (ti
                        )}
                     </div>
                 ))}
-                 {tiers.length === 0 && (
-                    <p className="text-center text-slate-500 py-4">No pricing tiers defined for this industry.</p>
-                )}
             </div>
         </div>
     );

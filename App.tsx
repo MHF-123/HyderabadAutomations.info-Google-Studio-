@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { HashRouter, Routes, Route, Outlet } from 'react-router-dom';
+import { HashRouter, Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { DataProvider } from './contexts/DataContext';
 import { AuthProvider } from './contexts/AuthContext';
@@ -38,6 +37,8 @@ export default function App() {
                 <Route path="industries/:slug" element={<IndustryDetail />} />
                 <Route path="contact" element={<Contact />} />
               </Route>
+              {/* Catch-all route for 404s or unknown paths */}
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </HashRouter>
         </DataProvider>
